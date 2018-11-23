@@ -19,7 +19,7 @@ Tags: go, golang, intro
 * Go Hello World :
 .code src/hello.go
 - go file must be started with package name
-- every projects go must be have main package
+- every go projects must have main package
 
 * Run/Build/Install go :
 - Run:
@@ -45,7 +45,7 @@ Tags: go, golang, intro
 * Packages (Import and Visibility / Encapsulation)
 - Packages(fw, libraries) can be imported into your package:
     import "github.com/mufti1/interconv/package"
-- Only func and type started with Capital lettern can be visible when imported
+- Only func and type started with Capital letter can be visible when imported
     func iamPrivate() {} // private not visible
     func IamPublic() {} // public visible
 - Example:
@@ -286,4 +286,7 @@ Tags: go, golang, intro
 - Intro Go from Kenneth Shaw in GO JAKARTA
 
 More about go can be found here
-https://github.com/go-jakarta/slides
+- [[https://tour.golang.org]] (introduction of go)
+- [[https://godoc.org]] (golang documentation package)
+- [[https://github.com/go-jakarta/slides]] (go slide from go jakarta)
+- [[https://github.com/mufti1/simple-rest]] (example rest api with mongodb)
