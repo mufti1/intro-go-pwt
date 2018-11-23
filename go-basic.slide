@@ -1,0 +1,288 @@
+Introduction Go
+(Basic Syntax of Go)
+
+Mufti Ismi Rizqi
+muftiismirizqi@gmail.com
+
+
+ketitik.com
+
+24 Nov 2016
+
+Tags: go, golang, intro
+
+* Installing Go
+
+- Download binaries from [[https://golang.org/dl][golang.org/dl]]
+
+* Go Hello World :
+.code src/hello.go
+- go file must be started with package name
+- every projects go must be have main package
+
+* Run/Build/Install go :
+- Run:
+    $ go run namefile.go
+- Build and Execute:
+    $ go build namefile.go
+    $ ls
+    namefile namefile.go
+    $ ./namefile
+- Install (like build but save in $GOPATH/bin/):
+    $ go install
+
+* Packages (Go get)
+- Go code is grouped by "package"
+- Every go application must have main package
+- You can get package with this sintax
+    $ go get -u github.com/mufti1/interconv/package
+- The sintax go get will fetch Go code via HTTP and store it @ $GOPATH/src/:
+    $ cd $GOPATH/src/github.com/mufti1/interconv/package
+    $ ls
+    boolean.go boolean_test.go coverage.out  float64.go  float64_test.go  int32.go  int32_test.go  int64.go  int64_test.go  int.go  int_test.go  string.go  string_test.go
+
+* Packages (Import and Visibility / Encapsulation)
+- Packages(fw, libraries) can be imported into your package:
+    import "github.com/mufti1/interconv/package"
+- Only func and type started with Capital lettern can be visible when imported
+    func iamPrivate() {} // private not visible
+    func IamPublic() {} // public visible
+- Example:
+    import(
+        "fmt"
+    )
+    fmt.Println("hello world")
+- fmt is the name of package
+- Println is function of fmt package and it is public or visible
+
+* The way to import
+- Single import :
+    import "fmt"
+- Multiple import :
+    import (
+        "fmt"
+        "os/exec"
+    )
+- Import with change the name package
+    import (
+        "fmt"
+        parsing "github.com/mufti1/interconv/package"
+        // parsing will be use to call the function of interconv
+    )
+    func main(){
+        int := parsing.ParseInt64(values)
+        // if without parsing be like
+        int2 := interconv.ParseInt64(values)
+    }
+
+* Go test
+    $ go test -v
+    === RUN   TestParseBool
+    --- PASS: TestParseBool (0.00s)
+    === RUN   TestParseInt64
+    --- PASS: TestParseInt64 (0.01s)
+    === RUN   TestParseString
+    --- PASS: TestParseString (0.02s)
+    PASS
+    ok      github.com/mufti1/interconv/package 0.004s
+
+* Important knowledge in go
+- Like C Syntax but:
+- No semicolons need -- every line break implies of semicolons
+- Unused import and variable make the compile error
+- Variable names are declared before the type
+- To automatically formats go code can do with gofmt
+
+* Go Operators
+- Usual operators:
+    +    &     +=    &=     &&    ==    !=    (    )
+    -    |     -=    |=     ||    <     <=    [    ]
+    *    ^     *=    ^=     <-    >     >=    {    }
+    /    <<    /=    <<=    ++    =     :=    ,    ;
+    %    >>    %=    >>=    --    !     ...   .    :
+         &^          &^=
+- Note: operators are only are available as a single expression (cannot be inlined), ie:
+    // valid
+    i++
+    j--
+
+    // not valid
+    j[i++]
+- Otherwise, operators work as expected:
+    j *= 10
+    i = i + 15
+
+* Variables and Const (Declaration and Assigment)
+- declare variable #1:
+    var a int // a declared with int datatype
+    a = 20
+- declare variable #2(Short Hand):
+    b := 20.4 // golang will automatically detect the datatype of b(float64)
+- Single const:
+    const hello = "hello"
+- Const with  any expression:
+    const (
+        a = "string"
+        b = 20
+        c = 20.4
+    )
+    // Constants can be character, string, boolean, or numeric values.
+    // Constants cannot be declared using the := syntax.
+
+* Array, slice
+- Array expression
+    // declare array
+    var a [2]int
+    // assign array
+    a[0] = 2
+
+    // declare and with shorthand
+    b := [2]int{1,2}
+- Slice
+    // if array have fixed size slice is other hand with dinamically size
+    // declare slice
+    primes := [6]int{2, 3, 5, 7, 11, 13}
+    var s []int = primes[1:4]
+    //shorthand
+    s := []int{1,2,3,4,5}
+
+* Map and Make
+- Map
+    // A map maps keys to values
+    var a = map[string]int{
+        "foo": 10,
+        "bar": 15,
+    }
+    for k, v := range a {
+        fmt.Printf(">> %s: %d\n", k, v)
+    }
+- Make
+    make is used to make either a slice, map or channel:
+    a := make([]string, 15)           // a has type '[]string' and initial length of 15
+    b := make(map[string]interface{}) // b has type 'map[string]interface{}'
+    c := make(chan *Point)            // c has type 'chan *Point'
+    
+* Functions
+- To declare functions in go is with keyword func NameFunction(parameter) datatypeReturn {}
+- Go support multiple function return
+- Example function with single return
+    func FavNumber(num int) int {
+        return num
+    }
+- function with more than one return
+    func DoubleReturn(parameter) (datatype1, datatype2){
+        return datatype1, datatype2
+    }
+- Go have defer function, defer allows any func to be executed after the func has ended
+- Go have more function like variadic, closure function
+
+* Example
+.code src/circle.go
+
+* looping(0)
+- Looping in go started with keyword "for"
+- Example for: 
+    for i := 0; i < 5; i++ {
+        fmt.Println("Number", i)
+    }
+- Example while:
+    sum := 1
+    for sum < 1000 {
+        sum += sum
+    }
+
+* looping(1)
+- Break and Continue
+    for i := 1; i <= 10; i++ {
+        if i % 2 == 1 {
+            continue
+        }
+        if i > 8 {
+            break
+        }
+        fmt.Println("Angka", i)
+    }
+- For Range
+    var fruits = [4]string{"apple", "grape", "banana", "melon"}
+    for _, fruit := range fruits {
+        fmt.Printf("fruit name : %s\n", fruit)
+    }
+
+* If and Switch Case
+- If go started with keyword "if" and doesn't have () for the statement
+    var point = 8
+    if point == 10 {
+        fmt.Println("Grade A")
+    } else if point > 5 {
+        fmt.Println("Grade B")
+    } else {
+        fmt.Printf("Grade D")
+    }
+- Switch Case
+    var point = 6
+
+    switch point {
+    case 8:
+        fmt.Println("perfect")
+    case 7:
+        fmt.Println("awesome")
+    default:
+        fmt.Println("not bad")
+    }
+
+* Type Declaration
+- No classes or objects
+- struct provides compound ("structured") types:
+    type Point struct {
+        X, Y float64
+    }
+- and interface defines a set of func's:
+    type Reader interface {
+        Read([]byte) (int, error)
+    }
+- Can create a type alias for any other type:
+    type MyUnsignedInteger uint32
+    type MyPoint Point
+    type MyReader Reader
+    type MyFunc func(string) error
+
+* Pointer
+- Pointer is object that stores the memory address of another value located in computer memory
+- Default value of pointer is nil(null in golang)
+- To access the value of pointer using the ampersand(&), also known as pass by reference
+- Example: 
+    var numberA int = 4
+    var numberB *int = &numberA
+
+    fmt.Println("numberA (value)   :", numberA)  // 4
+    fmt.Println("numberA (address) :", &numberA) // 0xc20800a220
+
+    fmt.Println("numberB (value)   :", *numberB) // 4
+    fmt.Println("numberB (address) :", numberB)  // 0xc20800a220
+
+* Goroutines and Channels
+- The best features of go is lightweight of concurenncy, and in go its called Goroutines
+- Any func in go can be Goroutines
+    func num(z int) {
+        fmt.Println(z)
+    }
+    func main() {
+        for i := 0; i < 10; i++ {
+            go num(i)
+        }
+        time.Sleep(1 * time.Second)
+    }
+- Channels are a unique feature in Go that provides type safe memory sharing
+    c := make(chan int)
+    c <- 10 // write 10 to c
+    j := <-c  // read int from c
+
+* Example Goroutines and Channels
+.code src/channels.go
+
+* Bibliography
+- Wikipedia
+- Intro Go from Kenneth Shaw in GO JAKARTA
+
+More about go can be found here
+https://github.com/go-jakarta/slides
